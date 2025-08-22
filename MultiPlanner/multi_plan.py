@@ -37,6 +37,7 @@ def multi_plan(
             drone_start = cfg.copy()
             drone_goal = cfg.copy()
             drone_goal[drone_idx] = goal[drone_idx]
+
             path = plan(
                 sim,
                 bounds,
@@ -53,7 +54,7 @@ def multi_plan(
             )
             paths_per_drone[drone_idx] = path
             cfg = paths_per_drone[drone_idx].pop(0)
-            mega_path += [cfg]
+            mega_path += [cfg.copy()]
         else:
             
             if len(paths_per_drone[drone_idx]) == 0:
@@ -61,7 +62,8 @@ def multi_plan(
                 continue
             cfg = paths_per_drone[drone_idx].pop(0)
             if sim.is_valid(cfg):
-                mega_path += [cfg]
+                mega_path += [cfg.copy()]
+                continue
             else:
                 path = plan(
                 sim,
@@ -80,10 +82,10 @@ def multi_plan(
             
             paths_per_drone[drone_idx] = path
             cfg = paths_per_drone[drone_idx].pop(0)
-            mega_path += [cfg]
+            mega_path += [cfg.copy()]
 
         
-        
+    # print(mega_path)
     sim.visualize_paths(mega_path)
         
         

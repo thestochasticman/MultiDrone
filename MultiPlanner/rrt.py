@@ -1,9 +1,9 @@
+from MultiPlanner.multi_drone import MultiDrone
 from MultiPlanner.utils import is_state_valid
 from MultiPlanner.utils import edge_valid
 from typing_extensions import Optional
 from MultiPlanner.tree import Tree
 import numpy as np
-
 
 def steer(a: np.ndarray, b: np.ndarray, eta: float) -> np.ndarray:
     d = float(np.linalg.norm(b - a))
@@ -29,7 +29,7 @@ def steer(q1: np.ndarray, q2: np.ndarray, drone_idx: int, eta: float)->np.ndarra
 
 
 def try_connect(
-        sim,
+        sim: MultiDrone,
         drone_idx: int,
         T: Tree,
         target: np.ndarray,
@@ -63,7 +63,9 @@ def try_connect(
         last_idx = T.add(q_step, last_idx)
         last_q = q_step
 
-        if float(np.linalg.norm(target[drone_idx] - last_q[drone_idx])) < 0.25 * eta:
+        # if float(np.linalg.norm(target[drone_idx] - last_q[drone_idx])) < 0.25 * eta:
+        dist = target[drone_idx] - last_q[drone_idx]
+        if np.all(dist < sim._goal_radii):
             break
 
     return last_idx, last_q

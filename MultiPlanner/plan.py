@@ -52,10 +52,22 @@ def plan(
 
         idx_b, last_b = try_connect(sim, drone_idx, Tb, last_a, eta)
         if idx_b is not None and float(np.linalg.norm(last_a[drone_idx] - last_b[drone_idx])) < 0.25 * eta:
+            
+
+
             path_a = Ta.path_to_root(idx_a)
             path_b = Tb.path_to_root(idx_b)
-            left = path_a
-            right = list(reversed(path_b))
+            
+            if np.linalg.norm(Ta.nodes[0].q - drone_start, axis=1) < np.linalg.norm(Tb.nodes[0].q - drone_start, axis=1):
+                left = path_a
+                right = list(reversed(path_b))
+                
+            else:
+                left = path_b
+                right = list(reversed(path_a))
+
+            # left = path_a
+            # right = list(reversed(path_b))
             if np.allclose(left[-1], right[0], atol=1e-9):
                 right = right[1:]
             joint = left + right
@@ -64,7 +76,7 @@ def plan(
                 joint.append(drone_goal.copy())
 
             print(f" success at iter {k} with {len(joint)} waypoints.")
-
-            return joint[1:]
+            print(len(joint))
+            return joint
         
         Ta, Tb = Tb, Ta

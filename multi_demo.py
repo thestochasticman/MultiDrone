@@ -5,7 +5,7 @@ import yaml
 
 def main():
     ap = argparse.ArgumentParser(description="Multi-drone RRT-Connect with narrow-passage sampling")
-    ap.add_argument("--env", type=str, default="multi_drone_obs/env.yaml" ,help="Environment YAML (MultiDrone format)")
+    ap.add_argument("--env", type=str, default="single_drone_obs/env2.yaml" ,help="Environment YAML (MultiDrone format)")
     ap.add_argument("--eta", type=float, default=1.2, help="Step size per extend")
     ap.add_argument("--iters", type=int, default=25000 * 2, help="Max Iter")
     ap.add_argument("--goal-bias", type=float, default=0.10, help="Probability of sampling the goal")

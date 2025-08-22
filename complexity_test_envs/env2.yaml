@@ -1,0 +1,41 @@
+# ===== Env 2: 2 corridors =====
+# ===== Bounds =====
+bounds:
+  x: [0, 40]
+  y: [0, 40]
+  z: [0, 6]
+
+# ===== Single-drone start =====
+initial_configuration:
+  - [2.0, 2.0, 1.5]    # start (K=1)
+
+# ===== Obstacles: full-height maze walls (size z = 6 at z=3) =====
+obstacles:
+  # y=10, gap on RIGHT
+  - type: box
+    position: [16.5, 10.0, 3.0]
+    size: [33.0, 0.8, 6.0]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [37.5, 10.0, 3.0]
+    size: [5.0, 0.8, 6.0]
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # y=14, gap on LEFT (x≈5..7)
+  - type: box
+    position: [2.5, 14.0, 3.0]
+    size: [5.0, 0.8, 6.0]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [23.5, 14.0, 3.0]
+    size: [33.0, 0.8, 6.0]
+    rotation: [0, 0, 0]
+    color: "red"
+
+# ===== Goal =====
+goals:
+  - position: [38.0, 38.0, 1.5]
+    radius: 0.75

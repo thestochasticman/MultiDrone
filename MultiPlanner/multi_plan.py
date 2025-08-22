@@ -27,6 +27,7 @@ def multi_plan(
     
 
     n = 0
+    runs_info: set = set()
     while not sim.is_goal(cfg):
         dists = ((start - goal)**2).sum(axis=1)
         sorted_dists_indices = dists.argsort()
@@ -37,9 +38,8 @@ def multi_plan(
             drone_start = cfg.copy()
             drone_goal = cfg.copy()
             drone_goal[drone_idx] = goal[drone_idx]
-
             
-            path = plan(
+            path, run_info = plan(
                 sim,
                 bounds,
                 drone_start,
@@ -51,12 +51,13 @@ def multi_plan(
                 p_bridge=p_bridge,
                 p_obstacle=p_obstacle,
                 ball_radius=ball_radius,
-                seed=seed
+                seed=seed,
+                verbose=verbose
             )
             paths_per_drone[drone_idx] = path
             cfg = paths_per_drone[drone_idx].pop(0)
             mega_path += [cfg.copy()]
-
+            runs_info.add(run_info)
         else:
             
             if len(paths_per_drone[drone_idx]) == 0:
@@ -70,25 +71,27 @@ def multi_plan(
                 drone_start = cfg.copy()
                 drone_goal = cfg.copy()
                 drone_goal[drone_idx] = goal[drone_idx]
-                path = plan(
-                sim,
-                bounds,
-                drone_start,
-                drone_goal,
-                drone_idx,
-                max_iterations=max_iterations,
-                eta=eta,
-                goal_bias=goal_bias,
-                p_bridge=p_bridge,
-                p_obstacle=p_obstacle,
-                ball_radius=ball_radius,
-                seed=seed
-            )
+                path, run_info = plan(
+                    sim,
+                    bounds,
+                    drone_start,
+                    drone_goal,
+                    drone_idx,
+                    max_iterations=max_iterations,
+                    eta=eta,
+                    goal_bias=goal_bias,
+                    p_bridge=p_bridge,
+                    p_obstacle=p_obstacle,
+                    ball_radius=ball_radius,
+                    seed=seed,
+                    verbose=verbose
+                )
+                runs_info.add(run_info)
             
             paths_per_drone[drone_idx] = path
             cfg = paths_per_drone[drone_idx].pop(0)
             mega_path += [cfg.copy()]
 
-    return mega_path
+    return mega_path, runs_info
         
         

@@ -1,11 +1,13 @@
 from MultiPlanner.multi_drone import MultiDrone
+from MultiPlanner.utils import in_drone_goal
 from MultiPlanner.samplers import sample
 from MultiPlanner.rrt import try_connect
 from MultiPlanner.samplers import sample
+from MultiPlanner.utils import edge_valid
+from MultiPlanner.run_info import RunInfo
 from typing_extensions import Optional
 from MultiPlanner.tree import Tree
-from MultiPlanner.utils import in_drone_goal
-from MultiPlanner.utils import edge_valid
+import time
 import numpy as np
 
 def plan(
@@ -31,6 +33,8 @@ def plan(
 
     start_is_Ta = True
     cfg = drone_start.copy()
+
+    start_time = time.perf_counter()
     for k in range(1, max_iterations + 1):
         q_rand = sample(
             sim,
@@ -72,10 +76,13 @@ def plan(
             if not in_drone_goal(sim, joint[-1], drone_goal) and edge_valid(sim, joint[-1], drone_goal):
                 joint.append(drone_goal.copy())
 
-            if verbose:
-                print(f" success at iter {k} with {len(joint)} waypoints.")
+            time_taken = time.perf_counter() - start_time
 
-            return joint
+            run_info = RunInfo(int(drone_idx), k, len(joint), time_taken)
+            if verbose:
+                # print(f" success at iter {k} with {len(joint)} waypoints.")
+                print(run_info)
+            return joint, run_info
         
         Ta, Tb = Tb, Ta
         start_is_Ta = not start_is_Ta

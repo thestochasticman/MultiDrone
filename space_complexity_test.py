@@ -72,7 +72,9 @@ def main():
         'complexity_test_envs/env4.yaml',
         'complexity_test_envs/env5.yaml',
         'complexity_test_envs/env6.yaml',
-        'complexity_test_envs/env7.yaml'
+        'complexity_test_envs/env7.yaml',
+        'complexity_test_envs/env8.yaml',
+        'complexity_test_envs/env9.yaml'
     ]
 
     obstacle_runs_info = {

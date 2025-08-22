@@ -4,7 +4,6 @@ def fetch_bounds(sim) -> np.ndarray:
 	return sim._bounds
 
 def cfg_from_point(p: np.ndarray) -> np.ndarray:
-    """Turn (3,) into (1,3) config."""
     return np.asarray(p, float).reshape(1, 3)
 
 def is_state_valid(sim, p: np.ndarray) -> bool:

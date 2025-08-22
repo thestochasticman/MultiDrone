@@ -38,14 +38,12 @@ def sample_near_obstacle(
         bounds: np.ndarray,
         rng: np.random.Generator,
         max_iter: int = 20,
-        ball_radius=1.2
+        ball_radius=3
     )-> np.ndarray:
 
     for iteration in range(max_iter):
         q1 = sample_uniform(bounds, rng)
-        # q2 = q1 + rng.normal(scale=1.2, size=3)
-        # q2 = clip_point(bounds, q2)
-        q2 = sample_inside_ball(bounds, q1, 3, rng)
+        q2 = sample_inside_ball(bounds, q1, ball_radius, rng)
         q1_valid = is_state_valid(sim, q1)
         q2_valid = is_state_valid(sim, q2)
         if q1_valid and not q2_valid:

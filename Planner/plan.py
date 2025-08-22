@@ -1,12 +1,10 @@
 from typing_extensions import Optional
-from Planner.utils import fetch_bounds
 from Planner.utils import edge_valid
 from Planner.samplers import sample
 from Planner.rrt import try_connect
 from Planner.utils import in_goal
 from Planner.tree import Tree
 import numpy as np
-import argparse
 
 def plan(
     sim,
@@ -52,7 +50,6 @@ def plan(
             if np.allclose(left[-1], right[0], atol=1e-9):
                 right = right[1:]
             joint = left + right
-
 
             if not in_goal(sim, joint[-1]) and edge_valid(sim, joint[-1], goal):
                 joint.append(goal.copy())

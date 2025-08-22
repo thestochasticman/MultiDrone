@@ -34,10 +34,7 @@ def try_connect(
         T: Tree,
         target: np.ndarray,
         eta: float) -> tuple[Optional[int], Optional[np.ndarray]]:
-    """
-    Extend T toward target; then greedily connect multiple steps (classic RRT-Connect).
-    Returns (last_idx, last_q) if at least one step succeeded; else (None, None).
-    """
+
     near_idx = T.nearest_idx(target, drone_idx)
     q_near = T.nodes[near_idx].q
     q_new = q_near.copy()

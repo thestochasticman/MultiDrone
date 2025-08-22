@@ -15,7 +15,6 @@ def multi_plan(
     verbose: bool = True
 )->list[np.ndarray]:
 
-    rng = np.random.default_rng(seed)
     bounds = sim._bounds
 
     start = np.asarray(sim.initial_configuration)

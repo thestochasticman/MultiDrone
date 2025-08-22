@@ -54,7 +54,6 @@ def try_connect(
     last_idx = T.add(q_new, near_idx)
     last_q = q_new
 
-    # # greedy connect loop
     while True:
         q_step = steer(last_q, target, drone_idx, eta)
 
@@ -63,9 +62,8 @@ def try_connect(
         last_idx = T.add(q_step, last_idx)
         last_q = q_step
 
-        # if float(np.linalg.norm(target[drone_idx] - last_q[drone_idx])) < 0.25 * eta:
-        dist = target[drone_idx] - last_q[drone_idx]
-        if np.all(dist < sim._goal_radii):
+        if float(np.linalg.norm(target[drone_idx] - last_q[drone_idx])) < 0.25 * eta:
+
             break
 
     return last_idx, last_q

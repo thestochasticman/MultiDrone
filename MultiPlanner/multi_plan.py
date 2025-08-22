@@ -34,10 +34,12 @@ def multi_plan(
         drone_idx = sorted_dists_indices[n]
 
         if paths_per_drone[drone_idx] == False:
+            
             drone_start = cfg.copy()
             drone_goal = cfg.copy()
             drone_goal[drone_idx] = goal[drone_idx]
 
+            
             path = plan(
                 sim,
                 bounds,
@@ -55,6 +57,7 @@ def multi_plan(
             paths_per_drone[drone_idx] = path
             cfg = paths_per_drone[drone_idx].pop(0)
             mega_path += [cfg.copy()]
+
         else:
             
             if len(paths_per_drone[drone_idx]) == 0:
@@ -65,6 +68,9 @@ def multi_plan(
                 mega_path += [cfg.copy()]
                 continue
             else:
+                drone_start = cfg.copy()
+                drone_goal = cfg.copy()
+                drone_goal[drone_idx] = goal[drone_idx]
                 path = plan(
                 sim,
                 bounds,

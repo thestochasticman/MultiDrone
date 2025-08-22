@@ -29,6 +29,7 @@ def plan(
     Ta = Tree(drone_start)
     Tb = Tree(drone_goal)
 
+    start_is_Ta = True
     cfg = drone_start.copy()
     for k in range(1, max_iterations + 1):
         q_rand = sample(
@@ -48,26 +49,22 @@ def plan(
         
         if idx_a is None:
             Ta, Tb = Tb, Ta
+            start_is_Ta = not start_is_Ta
             continue
 
         idx_b, last_b = try_connect(sim, drone_idx, Tb, last_a, eta)
         if idx_b is not None and float(np.linalg.norm(last_a[drone_idx] - last_b[drone_idx])) < 0.25 * eta:
             
-
-
-            path_a = Ta.path_to_root(idx_a)
-            path_b = Tb.path_to_root(idx_b)
-            
-            if np.linalg.norm(Ta.nodes[0].q - drone_start, axis=1) < np.linalg.norm(Tb.nodes[0].q - drone_start, axis=1):
-                left = path_a
-                right = list(reversed(path_b))
-                
+       
+            if start_is_Ta:
+                path_start = Ta.path_to_root(idx_a)
+                path_goal  = Tb.path_to_root(idx_b)   
             else:
-                left = path_b
-                right = list(reversed(path_a))
+                path_start = Tb.path_to_root(idx_b)   
+                path_goal  = Ta.path_to_root(idx_a)   
 
-            # left = path_a
-            # right = list(reversed(path_b))
+            left  = path_start
+            right = list(reversed(path_goal))        
             if np.allclose(left[-1], right[0], atol=1e-9):
                 right = right[1:]
             joint = left + right
@@ -80,3 +77,4 @@ def plan(
             return joint
         
         Ta, Tb = Tb, Ta
+        start_is_Ta = not start_is_Ta

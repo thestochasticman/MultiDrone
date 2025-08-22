@@ -8,7 +8,12 @@ Please run
 conda env create -f conda_env.yml
 ```
 
-### To test Run 
+to activate conda, please run
+
+```
+conda activate comp4620-a1-yasaradeel
+```
+### To test, please run 
 
 ```
 python multi_demo.py
@@ -16,7 +21,9 @@ python multi_demo.py
 Use the arguments as provided in the file or use default ones.
 
 
-### All the code exists in the MultiPlanner directory.
+### Code
+
+All of it exists in the MultiPlanner directory. I have tried to give it a modular package structure.
 
 
 ### Environments are in

@@ -17,7 +17,6 @@ def main():
     ap.add_argument("--verbose", action="store_true", help="Print status")
     args = ap.parse_args()
 
-
     with open(args.env, 'r') as f:
         config = yaml.safe_load(f)
         n_drones = len(config.get('initial_configuration'))

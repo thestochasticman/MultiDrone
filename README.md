@@ -35,6 +35,7 @@ All of it exists in the MultiPlanner directory. I have tried to give it a modula
 
 ### Environments are in
   * complexity_test_envs
+  * drone_complexity_envs
   * multi_drone_obs
   * single_drone_obs
 

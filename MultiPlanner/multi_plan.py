@@ -84,8 +84,6 @@ def multi_plan(
             cfg = paths_per_drone[drone_idx].pop(0)
             mega_path += [cfg.copy()]
 
-        
-    # print(mega_path)
-    sim.visualize_paths(mega_path)
+    return mega_path
         
         

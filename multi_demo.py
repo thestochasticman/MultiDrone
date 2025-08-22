@@ -4,14 +4,14 @@ import numpy as np
 import yaml
 
 def main():
-    ap = argparse.ArgumentParser(description="Multi-drone RRT-Connect with narrow-passage sampling")
+    ap = argparse.ArgumentParser(description="Multi-drone RRT-Connect")
     ap.add_argument("--env", type=str, default="single_drone_obs/env2.yaml" ,help="Environment YAML (MultiDrone format)")
     ap.add_argument("--eta", type=float, default=1.2, help="Step size per extend")
     ap.add_argument("--iters", type=int, default=25000 * 2, help="Max Iter")
     ap.add_argument("--goal-bias", type=float, default=0.10, help="Probability of sampling the goal")
     ap.add_argument("--p-bridge", type=float, default=0.40, help="Probability of bridge sampling")
     ap.add_argument("--p-obstacle", type=float, default=0.40, help="Probability of Gaussian boundary sampling")
-    ap.add_argument("--sigma", type=float, default=1.2, help="Gaussian sigma for boundary sampling")
+    ap.add_argument("--ball_radius", type=float, default=1.2, help="radius of the ball around to sample around q1 for sampling near obstacle")
     ap.add_argument("--seed", type=int, default=None, help="RNG seed")
     ap.add_argument("--verbose", action="store_true", help="Print status")
     args = ap.parse_args()
@@ -31,12 +31,11 @@ def main():
         goal_bias=args.goal_bias,
         p_bridge=args.p_bridge,
         p_obstacle=args.p_obstacle,
-        ball_radius=1,
+        ball_radius=args.ball_radius,
         seed=args.seed,
         verbose=args.verbose)
     
-    # sim.visualize_paths([np.asarray(p).reshape(1,3) for p in path])
-    # print(path)
+    sim.visualize_paths(path)
 
 if __name__ == '__main__':
     main()

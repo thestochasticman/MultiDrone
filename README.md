@@ -64,4 +64,3 @@ Multiple Drones try to navigate through 2 corridors.
 
 ![5 Drones times](outputs/drone_complexity_tests/num_drones_vs_time_taken.png)
 
-

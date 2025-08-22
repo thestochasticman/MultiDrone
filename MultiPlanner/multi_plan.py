@@ -27,59 +27,63 @@ def multi_plan(
     mega_path = []
     
 
+    n = 0
     while not sim.is_goal(cfg):
         dists = ((start - goal)**2).sum(axis=1)
-        print(dists.argsort())
-        # drone_idx = dists.argmin()
-        # if paths_per_drone[drone_idx] == False:
-        #     drone_start = cfg.copy()
-        #     drone_goal = cfg.copy()
-        #     drone_goal[drone_idx] = goal[drone_idx]
-        #     path = plan(
-        #         sim,
-        #         bounds,
-        #         drone_start,
-        #         drone_goal,
-        #         drone_idx,
-        #         max_iterations=max_iterations,
-        #         eta=eta,
-        #         goal_bias=goal_bias,
-        #         p_bridge=p_bridge,
-        #         p_obstacle=p_obstacle,
-        #         ball_radius=ball_radius,
-        #         seed=seed
-        #     )
-        #     paths_per_drone[drone_idx] = path
-        #     cfg = paths_per_drone[drone_idx].pop(0)
-        #     mega_path += [cfg]
-        # else:
-            
+        sorted_dists_indices = dists.argsort()
+        drone_idx = sorted_dists_indices[n]
 
-        #     cfg = paths_per_drone[drone_idx].pop(0)
-        #     if sim.is_valid(cfg):
-        #         mega_path += [cfg]
-        #     else:
-        #         path = plan(
-        #         sim,
-        #         bounds,
-        #         drone_start,
-        #         drone_goal,
-        #         drone_idx,
-        #         max_iterations=max_iterations,
-        #         eta=eta,
-        #         goal_bias=goal_bias,
-        #         p_bridge=p_bridge,
-        #         p_obstacle=p_obstacle,
-        #         ball_radius=ball_radius,
-        #         seed=seed
-        #     )
+        if paths_per_drone[drone_idx] == False:
+            drone_start = cfg.copy()
+            drone_goal = cfg.copy()
+            drone_goal[drone_idx] = goal[drone_idx]
+            path = plan(
+                sim,
+                bounds,
+                drone_start,
+                drone_goal,
+                drone_idx,
+                max_iterations=max_iterations,
+                eta=eta,
+                goal_bias=goal_bias,
+                p_bridge=p_bridge,
+                p_obstacle=p_obstacle,
+                ball_radius=ball_radius,
+                seed=seed
+            )
+            paths_per_drone[drone_idx] = path
+            cfg = paths_per_drone[drone_idx].pop(0)
+            mega_path += [cfg]
+        else:
             
-        #     paths_per_drone[drone_idx] = path
-        #     cfg = paths_per_drone[drone_idx].pop(0)
-        #     mega_path += [cfg]
+            if len(paths_per_drone[drone_idx]) == 0:
+                n = n + 1
+                continue
+            cfg = paths_per_drone[drone_idx].pop(0)
+            if sim.is_valid(cfg):
+                mega_path += [cfg]
+            else:
+                path = plan(
+                sim,
+                bounds,
+                drone_start,
+                drone_goal,
+                drone_idx,
+                max_iterations=max_iterations,
+                eta=eta,
+                goal_bias=goal_bias,
+                p_bridge=p_bridge,
+                p_obstacle=p_obstacle,
+                ball_radius=ball_radius,
+                seed=seed
+            )
+            
+            paths_per_drone[drone_idx] = path
+            cfg = paths_per_drone[drone_idx].pop(0)
+            mega_path += [cfg]
 
         
         
-        # # print(mega_path[-1])
+    sim.visualize_paths(mega_path)
         
         

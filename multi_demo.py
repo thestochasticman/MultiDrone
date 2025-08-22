@@ -11,12 +11,11 @@ def main():
     ap.add_argument("--iters", type=int, default=25000 * 2, help="Max Iter")
     ap.add_argument("--goal-bias", type=float, default=0.10, help="Probability of sampling the goal")
     ap.add_argument("--p-bridge", type=float, default=0.40, help="Probability of bridge sampling")
-    ap.add_argument("--p-obstacle", type=float, default=0.40, help="Probability of Gaussian boundary sampling")
+    ap.add_argument("--p-obstacle", type=float, default=0.40, help="Probability of obstacle sampling")
     ap.add_argument("--ball_radius", type=float, default=1.2, help="radius of the ball around to sample around q1 for sampling near obstacle")
     ap.add_argument("--seed", type=int, default=None, help="RNG seed")
     ap.add_argument("--verbose", action="store_true", help="Print status")
     args = ap.parse_args()
-
 
 
     with open(args.env, 'r') as f:

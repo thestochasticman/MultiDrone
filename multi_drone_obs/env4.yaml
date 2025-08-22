@@ -1,0 +1,133 @@
+# ===== Bounds =====
+bounds:
+  x: [0, 80]
+  y: [0, 80]
+  z: [0, 20]
+
+# ===== Initial positions (K=12) =====
+# Two rows in the south, safely below the first wall; z=2
+initial_configuration:
+  - [10, 6, 2]   # 1
+  - [16, 6, 2]   # 2
+  - [22, 6, 2]   # 3
+  - [28, 6, 2]   # 4
+  - [34, 6, 2]   # 5
+  - [40, 6, 2]   # 6
+  - [10, 10, 2]  # 7
+  - [16, 10, 2]  # 8
+  - [22, 10, 2]  # 9
+  - [28, 10, 2]  # 10
+  - [34, 10, 2]  # 11
+  - [40, 10, 2]  # 12
+
+# ===== Obstacles =====
+obstacles:
+  # --- South "fence" at y ≈ 15 with a central gap (forces early lateral alignment) ---
+  - type: box
+    position: [14, 15, 3]   # spans x ∈ [0,28]
+    size: [28, 2, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [59, 15, 3]   # spans x ∈ [38,80] → leaves a 10 m gap (28..38)
+    size: [42, 2, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # --- Two vertical walls with offset holes (create weaving in x between y ≈ 22..50) ---
+  # Wall at x ≈ 30 with gap near y ≈ 36
+  - type: box
+    position: [30, 28, 3]   # covers y ∈ [22,34]
+    size: [3, 12, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [30, 44, 3]   # covers y ∈ [38,50]
+    size: [3, 12, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # Wall at x ≈ 50 with gap near y ≈ 32
+  - type: box
+    position: [50, 27, 3]   # covers y ∈ [22,32]
+    size: [3, 10, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [50, 43, 3]   # covers y ∈ [38,48]
+    size: [3, 10, 6]
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # --- Ceiling panel across the middle (forces altitude planning) ---
+  - type: box
+    position: [40, 40, 10]  # z ∈ [9,11] → must fly either below 9 m or above 11 m to cross here
+    size: [40, 2, 2]
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # --- Pillar cluster to tighten the mid corridor (encourages micro-hops) ---
+  - type: cylinder
+    endpoints: [[40, 30, 0], [40, 30, 8]]
+    radius: 1.5
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: cylinder
+    endpoints: [[42, 32, 0], [42, 32, 8]]
+    radius: 1.5
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: cylinder
+    endpoints: [[38, 34, 0], [38, 34, 8]]
+    radius: 1.5
+    rotation: [0, 0, 0]
+    color: "red"
+
+  # --- Floating spheres near gaps (punish naive straight-up strategies) ---
+  - type: sphere
+    position: [33, 36, 6]   # near the wall-1 gap
+    radius: 2.0
+    color: "red"
+  - type: sphere
+    position: [47, 32, 6]   # near the wall-2 gap
+    radius: 2.0
+    color: "red"
+
+  # --- North "fence" at y ≈ 65 with an offset gap (different x than south gap) ---
+  - type: box
+    position: [11, 65, 6]   # z span 0..12; left segment x ∈ [0,22]
+    size: [22, 2, 12]
+    rotation: [0, 0, 0]
+    color: "red"
+  - type: box
+    position: [56, 65, 6]   # right segment x ∈ [32,80] → leaves a 10 m gap (22..32)
+    size: [48, 2, 12]
+    rotation: [0, 0, 0]
+    color: "red"
+
+# ===== Goals (two rows in the north) =====
+goals:
+  - position: [44, 74, 2]
+    radius: 1.0
+  - position: [50, 74, 2]
+    radius: 1.0
+  - position: [56, 74, 2]
+    radius: 1.0
+  - position: [62, 74, 2]
+    radius: 1.0
+  - position: [68, 74, 2]
+    radius: 1.0
+  - position: [74, 74, 2]
+    radius: 1.0
+  - position: [44, 70, 2]
+    radius: 1.0
+  - position: [50, 70, 2]
+    radius: 1.0
+  - position: [56, 70, 2]
+    radius: 1.0
+  - position: [62, 70, 2]
+    radius: 1.0
+  - position: [68, 70, 2]
+    radius: 1.0
+  - position: [74, 70, 2]
+    radius: 1.0

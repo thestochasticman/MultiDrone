@@ -26,7 +26,6 @@ def main():
 
     path = multi_plan(
         sim,
-        config,
         max_iterations=args.iters,
         eta=args.eta,
         goal_bias=args.goal_bias,

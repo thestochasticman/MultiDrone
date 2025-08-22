@@ -72,8 +72,9 @@ def plan(
             if not in_drone_goal(sim, joint[-1], drone_goal) and edge_valid(sim, joint[-1], drone_goal):
                 joint.append(drone_goal.copy())
 
-            print(f" success at iter {k} with {len(joint)} waypoints.")
-            print(len(joint))
+            if verbose:
+                print(f" success at iter {k} with {len(joint)} waypoints.")
+
             return joint
         
         Ta, Tb = Tb, Ta

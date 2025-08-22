@@ -40,9 +40,27 @@ All of it exists in the MultiPlanner directory. I have tried to give it a modula
 
 ### Space Complexity Test
 
+```
+python space_complexity_test.py
+```
 A single drone goes over different corridors.
 
 ![6 corridors](outputs/space_complexity_test/6_corridor.png)
 
 ![iterations_vs_num_corridors](outputs/space_complexity_test/iterations_vs_num_corridors.png)
 ![time_taken_vs_num_corridors](outputs/space_complexity_test/time_taken_vs_num_corridors.png)
+
+
+### Drone Complexity Test
+
+```
+python drone_count_complexity_test.py
+```
+
+Multiple Drones try to navigate through 2 corridors.
+
+![5 Drones](outputs/drone_complexity_tests/5-drones.png)
+
+![5 Drones times](outputs/drone_complexity_tests/num_drones_vs_time_taken.png)
+
+

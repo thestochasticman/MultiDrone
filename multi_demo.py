@@ -1,3 +1,4 @@
+from MultiPlanner.multi_drone import MultiDrone
 from MultiPlanner.multi_plan import multi_plan
 import argparse
 import numpy as np
@@ -16,7 +17,7 @@ def main():
     ap.add_argument("--verbose", action="store_true", help="Print status")
     args = ap.parse_args()
 
-    from Planner.multi_drone import MultiDrone
+
 
     with open(args.env, 'r') as f:
         config = yaml.safe_load(f)

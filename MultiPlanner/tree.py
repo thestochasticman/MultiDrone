@@ -1,4 +1,4 @@
-from Planner.node import Node
+from MultiPlanner.node import Node
 from typing import List
 import numpy as np
 

@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 import yaml
 
-def plot_metrics(data: dict, outdir: str = "outputs/"):
+def plot_metrics(data: dict, outdir: str = "outputs/space_complexity_test"):
     """
     Plots each metric in `data` (except 'num_corridors') vs 'num_corridors'
     and saves figures as PNG (and PDF) in `outdir`.
@@ -81,7 +81,7 @@ def main():
         'path_size': [],
         'num_corridors': [],
     }
-    num_corridors = 1
+    num_corridors = 0
     for env in envs:
         with open(env, 'r') as f:
             config = yaml.safe_load(f)
